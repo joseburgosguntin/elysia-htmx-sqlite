@@ -1,0 +1,32 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <title>HTMX with Elysia</title>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <script src="https://unpkg.com/htmx.org@1.9.5"></script>
+    <script src="https://unpkg.com/hyperscript.org@0.9.11"></script>
+  </head>
+  <body>
+    <h1>todos</h1>
+
+    <!-- if I want to only use only htmx -->
+    <!-- id="refresh"-->
+    <form
+      _="on htmx:afterRequest send refresh to #todos"
+      hx-post="/todos"
+      hx-swap="none"
+    >
+      <input type="text" name="name" value="filler" />
+      <button type="submit">Submit</button>
+    </form>
+    <!-- if I want to use only htmx -->
+    <!-- hx-trigger="load, htmx:afterRequest from:*#refresh" -->
+    <ol
+      id="todos"
+      hx-trigger="load, refresh"
+      hx-get="/todos"
+      hx-swap="innerHtml"
+    ></ol>
+  </body>
+</html>
